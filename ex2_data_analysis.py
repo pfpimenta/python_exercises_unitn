@@ -13,6 +13,7 @@ import pandas as pd
 filepath = "/home/pfpimenta/python_exercises_unitn/ex2_execution_logs.csv"
 df = pd.read_csv(filepath)
 
+
 ###########################
 # step 2 - Explore data
 
@@ -35,8 +36,7 @@ for col in df.columns:
 
 
 ###########################
-# step 2 - Extract information from the data
-
+# step 3 - Extract information from the data
 
 # overall execution_time
 print('Average execution time:')
