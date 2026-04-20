@@ -11,11 +11,11 @@ Follow these steps to set up a working Python environment for our lab.
 ### 0. Create a project working folder
 If you have not done this yet, then create a dedicated folder for the lab exercises:
 ```powershell
-mkdir lab_project; cd lab_project
+mkdir python_exercises_unitn; cd python_exercises_unitn
 ```
 
 ### 1. Install the 'uv' Package Manager
-Downloads and installs uv, a high-performance tool for managing Python versions and libraries without the complexity of standard installers.
+Downloads and installs uv, a high-performance tool for managing Python versions and packages without the complexity of standard installers.
 ```powershell
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
@@ -25,14 +25,15 @@ Tells your computer exactly where the uv program was just installed so you can r
 ```powershell
 $env:Path += ";$env:USERPROFILE\.local\bin;$env:USERPROFILE\.cargo\bin"
 ```
+
 ### 3. Initialize the Project
-Creates a new UV project structure, including a pyproject.toml file that will keep track of which libraries your code needs to run.
+Creates a new UV project structure, including a `pyproject.toml` file that will keep track of which packages your code needs to run.
 ```powershell
 uv init
 ```
 
 ### 4. Create a Virtual Environment
-Creates a dedicated .venv folder inside your project. This acts as a "container" so that the libraries you install here don't mess up other projects on your computer.
+Creates a dedicated .venv folder. This acts as a "container" so that the packages you install here don't mess up other projects on your computer.
 ```powershell
 uv venv
 ```
@@ -56,22 +57,26 @@ uv add pandas seaborn
 ```
 
 ### 8. Test Installation
-If you run this command on the terminal and don't see an error message, then the setup was successfull.
+If you run this command and see "Setup Successful!", you are ready to go.
 ```powershell
-python -c "import pandas; import seaborn; print('Setup Successful!')"
+python -c "import pandas; import seaborn; print('Setup Successful')"
 ```
+
+---
 
 ## Usage
 
 Now, every time you want to run your Python scripts of this project, you just have to activate the virtual environment first.
 
+---
 
 ## Adding new packages
-Be sure that your virtual environment is activated, and then just add the desired package to it using `uv add`. For example:
+Ensure your virtual environment is activated, then use `uv add`. For example:
 ```powershell
-uv add torch
+uv add matplotlib
 ```
 
+---
 
 ### ⚠️ Common Error: "DLL load failed" when importing torch
 This means your Windows is missing the C++ Redistributable.
