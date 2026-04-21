@@ -67,6 +67,9 @@ python -c "import pandas; import seaborn; print('Setup Successful')"
 ## Usage
 
 Now, every time you want to run your Python scripts of this project, you just have to activate the virtual environment first.
+```powershell
+.\.venv\Scripts\activate
+```
 
 ---
 
