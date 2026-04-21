@@ -1,12 +1,19 @@
 import pandas as pd
 import numpy as np
 
-def generate_heat_data(filename="ex2_execution_logs.csv"):
+DEFAULT_PARAMS = {
+    "matrix_sizes": [64, 128, 256, 512],
+    "thread_counts": [1, 2, 4, 8, 16],
+    "schedulers": ['static', 'dynamic', 'guided'],
+    "iterations": 50,
+}
+
+def generate_heat_data(filename="ex2_execution_logs.csv", simulation_params: dict = DEFAULT_PARAMS):
     # Parameters to simulate
-    matrix_sizes = [64, 128, 256, 512]
-    thread_counts = [1, 2, 4, 8, 16]
-    schedulers = ['static', 'dynamic', 'guided']
-    iterations = 50  # As required by the TPA project
+    matrix_sizes = simulation_params['matrix_sizes']
+    thread_counts = simulation_params['thread_counts']
+    schedulers = simulation_params['schedulers']
+    iterations = simulation_params['iterations']
     
     data = []
     run_id = 1
@@ -56,4 +63,24 @@ def generate_heat_data(filename="ex2_execution_logs.csv"):
     print(f"Successfully generated {len(df)} rows in '{filename}'")
 
 if __name__ == "__main__":
+    # data for exercise 2
     generate_heat_data()
+    
+    # train data for exercise 3
+    train_set_params = {
+        "matrix_sizes": [64, 128, 256, 512],
+        "thread_counts": [1, 2, 4, 8, 16, 32],
+        "schedulers": ['static', 'dynamic', 'guided'],
+        "iterations": 80,
+    }
+    generate_heat_data(filename="ex3_execution_logs_train.csv", simulation_params=train_set_params)
+
+    # test data for exercise 3
+    test_set_params = {
+        "matrix_sizes": [100, 200, 300, 400],
+        "thread_counts": [2, 4, 8, 16, 32, 64],
+        "schedulers": ['static', 'dynamic', 'guided'],
+        "iterations": 20,
+    }
+    generate_heat_data(filename="ex3_execution_logs_test.csv", simulation_params=test_set_params)
+
