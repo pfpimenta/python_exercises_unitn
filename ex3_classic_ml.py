@@ -91,12 +91,33 @@ print("\n" + "=" * 30)
 print("MODEL EVALUATION RESULTS")
 print("=" * 30)
 print(f"Linear Regression:")
-print(f"  - MAE: {lr_mae:.4f}")
-print(f"  - MAPE: {lr_mape:.2f} %")
-print(f"  - R2 Score: {lr_r2:.4f}")
+print(f"  - MAE: {lr_mae:.2f}")
+print(f"  - MAPE: {100*lr_mape:.2f} %")
+print(f"  - R2 Score: {lr_r2:.2f}")
 print("-" * 30)
 print(f"Decision Tree Regressor:")
-print(f"  - MAE: {dt_mae:.4f}")
-print(f"  - MAPE: {dt_mape:.2f} %")
-print(f"  - R2 Score: {dt_r2:.4f}")
+print(f"  - MAE: {dt_mae:.2f}")
+print(f"  - MAPE: {100*dt_mape:.2f} %")
+print(f"  - R2 Score: {dt_r2:.2f}")
 print("=" * 30)
+
+
+###########################
+# Extra: understanding the models
+# for Linear Regression, we can check the coefficients
+# for Decision Tree, we can check the feature importances 
+print("\n\nInterpretability (Model explanations)")
+
+# Create a list of all feature names in the order the model saw them:
+# ['matrix_size', 'num_threads'] + [the new OHE columns]
+all_features = list(train_X.columns)
+
+# 1. Show Linear Regression Coefficients with their names
+print("\nLinear Regression Coefficients:")
+lr_coefs = pd.Series(lr_model.coef_, index=all_features)
+print(lr_coefs)
+
+# 2. Show Decision Tree Feature Importances (how much each feature helps in reducing the error)
+print("\nDecision Tree Feature Importances:")
+dt_importances = pd.Series(dt_model.feature_importances_, index=all_features)
+print(dt_importances)

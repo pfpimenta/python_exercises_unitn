@@ -41,7 +41,7 @@ def generate_heat_data(filename="ex2_execution_logs.csv", simulation_params: dic
                 
                 for _ in range(iterations):
                     # Add random noise and "Cold Start" outliers for the first few runs
-                    noise = np.random.normal(0, base_time * 0.05)
+                    noise = np.random.normal(0, base_time * 0.01)
                     cold_start = base_time * 0.2 if _ < 2 else 0
                     
                     # Scheduling Penalty (The "Tax")
