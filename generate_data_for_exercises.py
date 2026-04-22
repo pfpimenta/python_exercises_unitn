@@ -1,3 +1,14 @@
+"""
+2026_04_24
+
+Script to generate data to be used in the exercises for the
+Programmazione avanzata ed intelligenza artificiale [146179]
+class at the University of Trento.
+
+The data is supposed to simulate the results of the 'TPA 2025 – Dissipation' exercise,
+i.e. data of execution time measurement
+"""
+
 import pandas as pd
 import numpy as np
 
@@ -78,7 +89,7 @@ if __name__ == "__main__":
     # test data for exercise 3
     test_set_params = {
         "matrix_sizes": [100, 200, 300, 400],
-        "thread_counts": [2, 4, 8, 16, 32, 64],
+        "thread_counts": [1, 2, 4, 8, 16, 32],
         "schedulers": ['static', 'dynamic', 'guided'],
         "iterations": 20,
     }
