@@ -76,11 +76,18 @@ plt.show()
 sns.barplot(data=df, x='scheduling_type', y='execution_time')
 plt.show()
 
-# Show all 3 params: matrix_size (x), threads (color), and scheduling (columns)
-sns.catplot(data=df, x='matrix_size', y='execution_time', hue='num_threads', col='scheduling_type', kind='bar')
+# Violin plot - average execution time per configuration (matrix_size)
+sns.violinplot(data=df, x='matrix_size', y='execution_time', hue='matrix_size')
+plt.show()
+
+# Box plot - average execution time per configuration (matrix_size)
+sns.boxplot(data=df, x='matrix_size', y='execution_time')
 plt.show()
 
 # Line plot - one line for each matrix_size, with num_threads on the X axis
 sns.lineplot(data=df, x='num_threads', y='execution_time', hue='matrix_size')
-plt.title("Execution Time vs. Parallelism")
+plt.show()
+
+# Show all 3 params: matrix_size (x), threads (color), and scheduling (columns)
+sns.catplot(data=df, x='matrix_size', y='execution_time', hue='num_threads', col='scheduling_type', kind='bar')
 plt.show()
