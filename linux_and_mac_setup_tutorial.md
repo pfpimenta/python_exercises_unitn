@@ -21,37 +21,31 @@ Downloads and installs uv, a high-performance tool for managing Python versions 
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-### 2. Update the System Path
-This ensures your terminal knows where `uv` was installed. After running this, you may need to **restart your terminal**.
-```bash
-source $HOME/.cargo/env
-```
-
-### 3. Initialize the Project
+### 2. Initialize the Project
 Creates a new UV project structure, including a `pyproject.toml` file that will keep track of which packages your code needs to run.
 ```bash
 uv init
 ```
 
-### 4. Create a Virtual Environment
+### 3. Create a Virtual Environment
 Creates a dedicated .venv folder. This acts as a "container" so that the packages you install here don't mess up other projects on your computer.
 ```bash
 uv venv
 ```
 
-### 5. Activate the Environment
+### 4. Activate the Environment
 Activates the created environment. Now, the Python packages we install will be saved there, instead of in the global space of your OS. After activated, you should see something like this on your terminal: `(venv)`.
 ```bash
 source .venv/bin/activate
 ```
 
-### 6. Install Python Packages
+### 5. Install Python Packages
 
 ```bash
 uv add pandas seaborn
 ```
 
-### 7. Test Installation
+### 6. Test Installation
 If you run this command and see "Setup Successful!", you are ready to go.
 ```bash
 python3 -c "import pandas; import seaborn; print('Setup Successful')"
