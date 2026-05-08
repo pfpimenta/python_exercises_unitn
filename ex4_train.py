@@ -43,10 +43,10 @@ test_loader = DataLoader(test_dataset, batch_size=64, shuffle=False)
 
 ### step 2 - train model
 
-# define training config
+# define training setup
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = LeNet5().to(device)
-criterion = nn.CrossEntropyLoss()
+loss_function = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 epochs = 5
@@ -58,18 +58,24 @@ training_start_time = time()
 ### training loop
 for epoch in range(epochs):
     epoch_start_time = time()
-    model.train()
+    model.train() # Sets the model in training mode
     epoch_loss = 0.0
     for images, labels in train_loader:
-        images, labels = images.to(device), labels.to(device)
+        images, labels = images.to(device), labels.to(device) # load the data into GPU, if needed
         
-        # Forward pass
+        ## Forward pass
+        # predict!
         outputs = model(images)
-        loss = criterion(outputs, labels)
+        # compute loss value
+        loss = loss_function(outputs, labels)
         
-        # Backward pass and optimize
+        ## Backward pass and optimize
+        # (batch_size == 1)
+        # Clears previous gradients
         optimizer.zero_grad()
+        # Computes the gradient of the loss:
         loss.backward()
+        # Adjusts the weights based on the computed gradients and the learning rate:
         optimizer.step()
         
         epoch_loss += loss.item()
