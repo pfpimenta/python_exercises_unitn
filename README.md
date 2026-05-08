@@ -3,30 +3,8 @@ Exercises made for the Programmazione avanzata ed intelligenza artificiale [1461
 
 
 ## Install dependencies
-To be able to complete the exercises, you first need to install the necessary Python packages.
 
-First, create a virtual environment:
-```bash
-python3 -m venv venv_python_unitn
-```
-
-Then, activate it:
-```bash
-source venv_python_unitn/bin/activate
-```
-
-Then install dependencies:
-```bash
-pip install pandas numpy seaborn
-```
-
-Test if the dependencies are correctly installed:
-```bash
-python3
-import numpy
-import pandas
-import seaborn
-```
+Use the tutorials `linux_and_mac_setup_tutorial.md` or `windows_setup_tutorial.md` in this repository to setup.
 
 
 ## Exercise 1 - Fibonacci
@@ -64,3 +42,26 @@ The sequence is defined by the recurrence relation:
     * 4a) Bar plot - average execution time
 
 *Bonus*: Find outliers in the data, and generate the plots without them.
+
+
+## Exercise 3 - Classic ML
+
+*Objective*: Introduction to typical Machine Learning workflow
+
+*Task Description*:
+1) Load train data and test data from a CSV file
+2) Fit (train) models on the train data: Linear Regression and Decision Tree
+3) Evaluate each model on the test data
+4) Compare the evaluation results 
+
+
+## Exercise 4 - Convolutional Neural Networks
+
+*Objective*: Train and evaluate a CNN for an image classification task
+
+*Task Description*:
+* 1) Load and visualize the MNIST dataset
+* 2) Define the LeNet5 model
+* 3) Train
+* 4) Evaluate
+* extra: compute the confusion matrix and find the most common mistake made by the model (for example: predicts 8s as 3s)
