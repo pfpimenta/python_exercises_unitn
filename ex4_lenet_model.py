@@ -15,40 +15,50 @@ class LeNet5(nn.Module):
     def __init__(self):
         super(LeNet5, self).__init__()
         
-        # Layer C1: Convolutional Layer
-        # Input: 1 channel (Grayscale), Output: 6 channels, Kernel: 5x5
-        # We add padding=2 so the 28x28 MNIST image becomes 32x32 (LeNet original size)
-        self.c1 = nn.Conv2d(in_channels=1, out_channels=6, kernel_size=5, padding=2)
+        # C1: Convolutional Layer (6 filters, 5x5)
+        # Input 1x28x28 -> Padding 2 -> 1x32x32 -> Output 6x28x28
+        self.c1 = nn.Conv2d(1, 6, kernel_size=5, padding=2)
         
-        # Layer S2: Subsampling (Pooling) Layer
+        # S1: Subsampling (2x2 Avg Pool)
+        # Output 6x14x14
+        self.s1 = nn.AvgPool2d(kernel_size=2, stride=2)
+        
+        # C2: Convolutional Layer (16 filters, 5x5)
+        # Output 16x10x10
+        self.c2 = nn.Conv2d(6, 16, kernel_size=5)
+        
+        # S2: Subsampling (2x2 Avg Pool)
+        # Output 16x5x5
         self.s2 = nn.AvgPool2d(kernel_size=2, stride=2)
         
-        # Layer C3: Convolutional Layer
-        self.c3 = nn.Conv2d(in_channels=6, out_channels=16, kernel_size=5)
+        # C3: Convolutional Layer (120 filters, 5x5)
+        # This layer "flattens" the 5x5 space because the kernel matches the input size
+        # Output 120x1x1
+        self.c3 = nn.Conv2d(16, 120, kernel_size=5)
         
-        # Layer S4: Subsampling (Pooling) Layer
-        self.s4 = nn.AvgPool2d(kernel_size=2, stride=2)
+        # F1: Fully Connected Layer
+        self.f1 = nn.Linear(120, 84)
         
-        # Fully Connected Layers
-        # Flattening 16 channels of 5x5 images = 400 features
-        self.f5 = nn.Linear(in_features=16 * 5 * 5, out_features=120)
-        self.f6 = nn.Linear(in_features=120, out_features=84)
-        self.output = nn.Linear(in_features=84, out_features=10)
+        # F2: Output Layer
+        self.f2 = nn.Linear(84, 10)
 
     def forward(self, x):
-        # Convolution -> Activation -> Pooling
-        x = self.s2(F.relu(self.c1(x)))
-        x = self.s4(F.relu(self.c3(x)))
+        # Convolution blocks
+        x = F.tanh(self.c1(x))
+        x = self.s1(x)
         
-        # Flatten the data for the dense layers
-        x = x.view(-1, 16 * 5 * 5)
+        x = F.tanh(self.c2(x))
+        x = self.s2(x)
         
-        # Fully connected layers with ReLU
-        x = F.relu(self.f5(x))
-        x = F.relu(self.f6(x))
+        x = F.tanh(self.c3(x))
         
-        # The final output (Logits)
-        x = self.output(x)
+        # Flatten: from (Batch, 120, 1, 1) to (Batch, 120)
+        x = x.view(-1, 120)
+        
+        # Fully connected layers
+        x = F.tanh(self.f1(x))
+        x = self.f2(x) # Output logits
+        
         return x
 
 

@@ -1,15 +1,13 @@
 """
 2026_05_08
 
+Train file: trains the model on the train dataset and saves it in a .pth file.
+
 Convolutional Neural Network (CNN) exercise for the
 Programmazione avanzata ed intelligenza artificiale [146179]
 class at the University of Trento.
 
 Objective: Application of a CNN in a toy example
-1) Load the data, 
-2) Train the CNN 
-3) 
-4) Evaluate the model's performance
 """
 from pathlib import Path
 from time import time
@@ -61,7 +59,7 @@ training_start_time = time()
 for epoch in range(epochs):
     epoch_start_time = time()
     model.train()
-    running_loss = 0.0
+    epoch_loss = 0.0
     for images, labels in train_loader:
         images, labels = images.to(device), labels.to(device)
         
@@ -74,11 +72,11 @@ for epoch in range(epochs):
         loss.backward()
         optimizer.step()
         
-        running_loss += loss.item()
+        epoch_loss += loss.item()
     
     epoch_end_time = time()
     epoch_time = epoch_end_time - epoch_start_time
-    print(f"Epoch [{epoch+1}/{epochs}],\tLoss: {running_loss/len(train_loader):.4f} \t elapsed time: {epoch_time:.4f} seconds")
+    print(f"Epoch [{epoch+1}/{epochs}],\tLoss: {epoch_loss/len(train_loader):.4f} \t elapsed time: {epoch_time:.4f} seconds")
 
 training_end_time = time()
 training_time = training_end_time - training_start_time

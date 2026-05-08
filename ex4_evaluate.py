@@ -1,3 +1,14 @@
+"""
+2026_05_08
+
+Evaluation file: loads the model and evaluates it on the test dataset.
+
+Convolutional Neural Network (CNN) exercise for the
+Programmazione avanzata ed intelligenza artificiale [146179]
+class at the University of Trento.
+
+Objective: Application of a CNN in a toy example
+"""
 from pathlib import Path
 
 import torch
@@ -43,3 +54,6 @@ with torch.no_grad():
         correct += (predicted == labels).sum().item()
 
 print(f'Accuracy on 10,000 test images: {100 * correct / total:.2f}%')
+
+# Confusion matrix
+# TODO
