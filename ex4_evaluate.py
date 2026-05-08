@@ -13,6 +13,8 @@ from pathlib import Path
 
 import torch
 from torch.utils.data import DataLoader
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+import matplotlib.pyplot as plt
 
 from ex4_lenet_model import LeNet5
 from ex4_mnist_dataset import MnistDataloader, preprocess_data # dataset is defined here
@@ -45,6 +47,8 @@ model.eval()
 # 4. Evaluation Loop
 correct = 0
 total = 0
+all_preds = []
+all_labels = []
 with torch.no_grad():
     for images, labels in test_loader:
         images, labels = images.to(device), labels.to(device)
@@ -53,7 +57,18 @@ with torch.no_grad():
         total += labels.size(0)
         correct += (predicted == labels).sum().item()
 
+        # collecting for confusion matrix
+        all_preds.extend(predicted.cpu().numpy())
+        all_labels.extend(labels.cpu().numpy())
+
 print(f'Accuracy on 10,000 test images: {100 * correct / total:.2f}%')
 
-# Confusion matrix
-# TODO
+### Extra: confusion matrix
+# Compute confusion matrix
+cm = confusion_matrix(all_labels, all_preds)
+
+# Plot confusion matrix
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=list(range(10)))
+disp.plot(cmap=plt.cm.Blues, values_format='d')
+plt.title(f'Confusion Matrix: LeNet-5 on MNIST\nAccuracy: {100 * correct / total:.2f}%')
+plt.show()
