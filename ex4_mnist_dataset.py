@@ -12,6 +12,7 @@ import random
 import struct
 from array import array
 from typing import Tuple
+from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -106,17 +107,23 @@ def preprocess_data(x, y):
     y_tensor = torch.tensor(np.array(y), dtype=torch.long)
     return TensorDataset(x_tensor, y_tensor)
 
-if __name__ == "__main__":
-    ### step 1 - load and show MNIST dataset
+def get_mnist_dataloader() -> MnistDataloader:
     # get paths
-    data_folder_path = '/home/pfpimenta/python_exercises_unitn/data/mnist/'
-    training_images_filepath = data_folder_path + 'train-images-idx3-ubyte/train-images-idx3-ubyte'
-    training_labels_filepath = data_folder_path + 'train-labels-idx1-ubyte/train-labels-idx1-ubyte'
-    test_images_filepath = data_folder_path + 't10k-images-idx3-ubyte/t10k-images-idx3-ubyte'
-    test_labels_filepath = data_folder_path + 't10k-labels-idx1-ubyte/t10k-labels-idx1-ubyte'
+    base_path = Path(__file__).resolve().parent # project folder path
+    data_folder_path = base_path / "data" / "mnist"
+    training_images_filepath = data_folder_path / 'train-images-idx3-ubyte/train-images-idx3-ubyte'
+    training_labels_filepath = data_folder_path / 'train-labels-idx1-ubyte/train-labels-idx1-ubyte'
+    test_images_filepath = data_folder_path / 't10k-images-idx3-ubyte/t10k-images-idx3-ubyte'
+    test_labels_filepath = data_folder_path / 't10k-labels-idx1-ubyte/t10k-labels-idx1-ubyte'
+
+    mnist_dataloader = MnistDataloader(training_images_filepath, training_labels_filepath, test_images_filepath, test_labels_filepath)
+    return mnist_dataloader
+
+if __name__ == "__main__":
+    ### load and show MNIST dataset
 
     #  load data
-    mnist_dataloader = MnistDataloader(training_images_filepath, training_labels_filepath, test_images_filepath, test_labels_filepath)
+    mnist_dataloader = get_mnist_dataloader()
     (x_train, y_train), (x_test, y_test) = mnist_dataloader.load_data()
 
     # Show some random training and test images 

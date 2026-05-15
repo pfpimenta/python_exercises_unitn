@@ -17,6 +17,7 @@ class LeNet5(nn.Module):
         
         # C1: Convolutional Layer (6 filters, 5x5)
         # Input 1x28x28 -> Padding 2 -> 1x32x32 -> Output 6x28x28
+        # TODO 3x3 e 11x11
         self.c1 = nn.Conv2d(1, 6, kernel_size=5, padding=2)
         
         # S1: Subsampling (2x2 Avg Pool)
@@ -46,10 +47,10 @@ class LeNet5(nn.Module):
         # Convolution blocks
         x = F.tanh(self.c1(x))
         x = self.s1(x)
-        
+
         x = F.tanh(self.c2(x))
         x = self.s2(x)
-        
+
         x = F.tanh(self.c3(x))
         
         # Flatten: from (Batch, 120, 1, 1) to (Batch, 120)
